@@ -52,22 +52,57 @@
  *   hasRationCard({"RC001":{...}}, "RC001") // => true
  *   removeRationCard(registry, "RC001")    // => true
  */
-export function getFamilyNames(registry) {
-  // Your code here
+export function getItemNames(items) {
+
+  if (!Array.isArray(items)) {
+    return [];
+  }
+
+  return items.map(item => item.name);
 }
 
-export function getAllFamilies(registry) {
-  // Your code here
+export function getAffordableItems(items, maxPrice) {
+
+  if (!Array.isArray(items) || typeof maxPrice !== "number") {
+    return [];
+  }
+
+  return items.filter(item => item.price <= maxPrice);
 }
 
-export function getRationCardEntries(registry) {
-  // Your code here
+export function calculateTotal(items) {
+
+  if (!Array.isArray(items) || items.length === 0) {
+    return 0;
+  }
+
+  return items.reduce((total, item) => {
+    return total + (item.price * item.qty);
+  }, 0);
 }
 
-export function hasRationCard(registry, cardId) {
-  // Your code here
+export function sortByPrice(items, ascending) {
+
+  if (!Array.isArray(items)) {
+    return [];
+  }
+
+  const sorted = [...items].sort((a, b) => a.price - b.price);
+
+  if (ascending) {
+    return sorted;
+  } else {
+    return sorted.reverse();
+  }
 }
 
-export function removeRationCard(registry, cardId) {
-  // Your code here
+export function formatBill(items) {
+
+  if (!Array.isArray(items) || items.length === 0) {
+    return "";
+  }
+
+  return items
+    .map(item => `${item.name} x ${item.qty} = Rs.${item.price * item.qty}`)
+    .join("\n");
 }
